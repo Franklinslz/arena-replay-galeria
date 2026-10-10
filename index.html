@@ -181,15 +181,20 @@ button:disabled { opacity: .6; cursor: wait; }
   color: #91a4b9;
   overflow: hidden;
 }
-.date-control .date-value { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.date-control .calendar-icon { flex: 0 0 auto; color: var(--cyan); font-size: 20px; }
+.date-control .date-value { position: relative; z-index: 1; display: block; min-width: 0; flex: 1 1 auto; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: #91a4b9; pointer-events: none; }
+.date-control .calendar-icon { position: relative; z-index: 1; display: block; flex: 0 0 auto; color: var(--cyan); font-size: 20px; pointer-events: none; }
 #dateFilter {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
+  opacity: 0.01;
+  z-index: 2;
   cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
 }
 .toolbar {
   display: grid;
@@ -408,6 +413,10 @@ const videosBox = document.getElementById("videos");
 const refreshButton = document.getElementById("refresh");
 const dateFilter = document.getElementById("dateFilter");
 const dateValue = document.getElementById("dateValue");
+const dateControl = document.querySelector(".date-control");
+dateControl.addEventListener("click", () => {
+  try { if (typeof dateFilter.showPicker === "function") dateFilter.showPicker(); else dateFilter.focus(); } catch (_) { dateFilter.focus(); }
+});
 const searchInput = document.getElementById("search");
 const cameraButtons = [...document.querySelectorAll("[data-camera]")];
 
