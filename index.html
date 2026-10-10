@@ -171,23 +171,6 @@ button:disabled { opacity: .6; cursor: wait; }
   gap: 12px;
   margin-bottom: 14px;
 }
-.date-field { min-width: 0; }
-.date-field label {
-  display: block;
-  margin: 0 0 6px 2px;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.2;
-}
-#dateFilter {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  min-height: 46px;
-  color: var(--text);
-  color-scheme: dark;
-  background-color: #080e17;
-}
 .filters { display: flex; flex-wrap: wrap; gap: 8px; }
 .filters button { flex: 1; min-width: 70px; }
 #videos {
@@ -288,9 +271,10 @@ footer strong { color: var(--cyan); letter-spacing: 2px; }
   .sub { font-size: 12px; line-height: 1.45; }
   .login-grid, .toolbar { grid-template-columns: minmax(0, 1fr); }
   .login-grid button { width: 100%; min-width: 0; }
-  .toolbar { gap: 10px; }
-  .date-field label { margin-bottom: 6px; font-size: 12px; }
+  .toolbar { gap: 12px; }
   input { min-width: 0; width: 100%; font-size: 16px; padding: 12px; }
+  .date-field label, .search-field label { font-size: 11px; margin-bottom: 6px; }
+  #dateFilter { height: 48px; min-height: 48px; max-height: 48px; padding: 0 10px; font-size: 16px; }
   .section-head { align-items: flex-start; gap: 12px; }
   .live-label { margin-left: 52px; }
   .filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; }
@@ -352,12 +336,15 @@ footer strong { color: var(--cyan); letter-spacing: 2px; }
 
       <div class="toolbar">
         <div class="date-field">
-          <label for="dateFilter">Filtrar por data</label>
+          <label for="dateFilter">FILTRAR POR DATA</label>
           <input id="dateFilter" type="date" aria-label="Filtrar por data">
         </div>
-        <input id="search" type="search"
-          placeholder="Buscar por nome ou câmera..."
-          aria-label="Buscar replays">
+        <div class="search-field">
+          <label for="search">BUSCAR REPLAYS</label>
+          <input id="search" type="search"
+            placeholder="Buscar por nome ou câmera..."
+            aria-label="Buscar replays">
+        </div>
       </div>
       <div class="filters">
         <button class="outline active" data-camera="ALL">TODOS</button>
