@@ -23,7 +23,12 @@
 body {
   margin: 0;
   color: var(--text);
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: linear-gradient(rgba(3, 8, 16, .78), rgba(3, 8, 16, .86)), url("./Est%C3%A1dio%20Vazio%20sob%20Luzes%20Azuis.png");
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   font-family: Inter, Arial, sans-serif;
 }
 button, input { font: inherit; }
@@ -39,8 +44,8 @@ button { cursor: pointer; }
   text-align: center;
   padding: 30px 18px;
   background:
-    radial-gradient(ellipse at 50% 120%, #00658c77, transparent 55%),
-    linear-gradient(120deg, #101e2c, #080d16 65%);
+    linear-gradient(rgba(5, 13, 24, .70), rgba(5, 13, 24, .82)),
+    radial-gradient(ellipse at 50% 120%, #00658c55, transparent 55%);
   border-bottom: 1px solid #1d4055;
 }
 .hero:before {
@@ -77,7 +82,7 @@ button { cursor: pointer; }
 .hero p { color: #a9bacb; margin: 0; }
 .wrap { max-width: 1200px; margin: auto; padding: 26px 18px 50px; }
 .panel {
-  background: linear-gradient(145deg, #121e2b, #0e1621);
+  background: linear-gradient(145deg, rgba(12, 27, 43, .94), rgba(5, 14, 25, .94));
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 22px;
@@ -186,7 +191,7 @@ button:disabled { opacity: .6; cursor: wait; }
 .video-card {
   min-width: 0;
   overflow: hidden;
-  background: linear-gradient(155deg, #142131, #0d141e);
+  background: linear-gradient(155deg, rgba(15, 34, 52, .96), rgba(5, 14, 24, .96));
   border: 1px solid #25384c;
   border-radius: 15px;
   transition: transform .18s, border-color .18s;
