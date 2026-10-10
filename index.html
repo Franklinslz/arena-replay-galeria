@@ -4,120 +4,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ARENA REPLAY PRO | Galeria</title>
+<meta name="theme-color" content="#080d15">
+<title>ARENA REPLAY PRO | Galeria dos atletas</title>
 <style>
 :root {
   color-scheme: dark;
-  --bg: #0b1018;
-  --card: #151e2b;
-  --green: #20d878;
-  --text: #f4f7fb;
-  --muted: #a9b5c5;
+  --bg: #080d15;
+  --panel: #111b29;
+  --border: #263b50;
+  --blue: #08b9ed;
+  --blue2: #087cf0;
+  --text: #f4f8ff;
+  --muted: #98aabd;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  background: var(--bg);
+  background: radial-gradient(ellipse at top, #14283c 0, var(--bg) 55%);
   color: var(--text);
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 header {
-  padding: 24px 16px;
   text-align: center;
-  background: linear-gradient(135deg, #122a23, #111a29);
-  border-bottom: 1px solid #283544;
+  padding: 22px 16px 26px;
+  border-bottom: 1px solid #183247;
+  background: linear-gradient(180deg, #101d2b, transparent);
 }
-.logo { font-size: 25px; font-weight: 900; letter-spacing: 1px; }
-.logo span { color: var(--green); }
-header p { color: var(--muted); margin-bottom: 0; }
-main { max-width: 1050px; margin: auto; padding: 22px 16px; }
-.panel, .video-card {
-  background: var(--card);
-  border: 1px solid #293647;
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 16px;
+.logo {
+  display: block;
+  width: min(310px, 82vw);
+  max-height: 175px;
+  object-fit: contain;
+  margin: 0 auto 8px;
 }
-h2 { margin-top: 0; }
-label { display: block; margin-bottom: 8px; color: var(--muted); }
+.tagline {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+main { max-width: 1200px; margin: auto; padding: 22px 16px 42px; }
+.panel {
+  background: rgba(17, 27, 41, .96);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 12px 35px #0003;
+}
+h1 { font-size: clamp(22px, 4vw, 32px); margin: 0 0 8px; }
+h2 { font-size: 20px; margin: 0 0 16px; }
+p { line-height: 1.5; }
+.muted { color: var(--muted); }
+label { display: block; margin-bottom: 9px; color: var(--muted); }
 input, button {
-  width: 100%;
-  padding: 13px;
-  border-radius: 9px;
-  font-size: 16px;
+  font: inherit;
+  border-radius: 10px;
+  min-height: 46px;
 }
 input {
-  background: #0b1018;
+  width: 100%;
+  padding: 12px 14px;
   color: white;
-  border: 1px solid #39485a;
-  margin-bottom: 10px;
+  background: #080f19;
+  border: 1px solid #354a60;
+  margin-bottom: 12px;
 }
+input:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
 button {
-  border: 0;
-  background: var(--green);
-  color: #07140c;
-  font-weight: bold;
   cursor: pointer;
+  border: 1px solid transparent;
+  padding: 11px 16px;
+  font-weight: 700;
+  transition: .15s ease;
 }
-button:disabled { opacity: .6; cursor: wait; }
+button:disabled { opacity: .55; cursor: wait; }
+.primary {
+  color: #00131b;
+  background: linear-gradient(135deg, #28d7f7, #0788ef);
+}
+.primary:hover { filter: brightness(1.12); }
 .secondary {
-  display: inline-block;
-  width: auto;
-  text-decoration: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  background: #29394b;
-  color: white;
-  font-weight: bold;
-  margin: 5px 5px 0 0;
+  color: var(--text);
+  background: #17283a;
+  border-color: #344a60;
 }
-#status { color: var(--muted); margin-top: 12px; white-space: pre-wrap; }
+.secondary.active {
+  color: #00131b;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.login-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+.login-row input { margin: 0; }
+.login-row button { min-width: 180px; }
+#loginStatus, #status { color: var(--muted); margin-top: 12px; }
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto minmax(200px, 1.2fr);
+  gap: 12px;
+  align-items: center;
+}
+.toolbar input { margin: 0; }
+.filters { display: flex; flex-wrap: wrap; gap: 7px; }
+.filters button { min-height: 42px; }
 #videos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 275px), 1fr));
+  gap: 16px;
 }
-.video-card { margin: 0; min-width: 0; }
-video { width: 100%; border-radius: 9px; background: #000; }
-.video-card h3 { font-size: 15px; overflow-wrap: anywhere; }
-.meta { color: var(--muted); font-size: 13px; }
+.video-card {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 8px 22px #0003;
+}
+.video-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px 0;
+}
+.camera {
+  font-size: 12px;
+  font-weight: 800;
+  color: #04121b;
+  background: var(--blue);
+  border-radius: 5px;
+  padding: 6px 9px;
+}
+.camera.cam2 { background: #21cf83; }
+.video-date { color: var(--muted); font-size: 12px; }
+video {
+  display: block;
+  width: calc(100% - 24px);
+  margin: 12px;
+  margin-bottom: 0;
+  border-radius: 9px;
+  background: #000;
+  aspect-ratio: 16 / 9;
+}
+.video-info { padding: 12px 14px 15px; }
+.video-info h3 { margin: 0 0 8px; font-size: 15px; overflow-wrap: anywhere; }
+.video-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+.video-actions a {
+  text-decoration: none;
+  text-align: center;
+  flex: 1;
+  min-width: 105px;
+  padding: 10px 12px;
+  border: 1px solid #344a60;
+  border-radius: 9px;
+  color: white;
+  background: #17283a;
+  font-size: 13px;
+  font-weight: 700;
+}
+.video-actions a.download {
+  background: linear-gradient(135deg, #20d5ef, #0787ed);
+  color: #00121b;
+  border: 0;
+}
 .hidden { display: none !important; }
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 32px 16px;
+  border: 1px dashed #354a60;
+  border-radius: 14px;
+  color: var(--muted);
+}
 footer {
   text-align: center;
+  padding: 24px 16px;
   color: var(--muted);
-  padding: 25px 12px;
+  border-top: 1px solid #183247;
   font-size: 12px;
+}
+@media (max-width: 720px) {
+  .login-row { grid-template-columns: 1fr; }
+  .login-row button { width: 100%; }
+  .toolbar { grid-template-columns: 1fr; }
+  .filters button { flex: 1; }
+  .panel { padding: 16px; }
 }
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">ARENA <span>REPLAY PRO</span></div>
-  <p>Seus lances da arena, em qualquer lugar.</p>
+  <img class="logo" src="./logo.png" alt="ARENA REPLAY PRO">
+  <div class="tagline">Galeria oficial dos atletas</div>
 </header>
 
 <main>
   <section class="panel" id="login">
-    <h2>🔐 Galeria dos atletas</h2>
-    <label for="password">Senha de acesso</label>
-    <input id="password" type="password"
-      placeholder="Digite a senha da galeria"
-      autocomplete="current-password">
-    <button id="enter">Entrar na galeria</button>
+    <h1>Seus melhores lances</h1>
+    <p class="muted">Assista, reveja e baixe os vídeos da Arena.</p>
+    <label for="password">Senha de acesso à galeria</label>
+    <div class="login-row">
+      <input id="password" type="password"
+        placeholder="Digite a senha da galeria"
+        autocomplete="current-password">
+      <button class="primary" id="enter">Entrar na galeria</button>
+    </div>
     <div id="loginStatus" role="status"></div>
   </section>
 
   <section id="gallery" class="hidden">
     <div class="panel">
-      <h2>🎬 Meus replays</h2>
-      <button id="refresh">Atualizar vídeos</button>
-      <div id="status" role="status">Carregando...</div>
+      <h2>🎬 Galeria de replays</h2>
+      <div class="toolbar">
+        <input id="dateFilter" type="date" aria-label="Filtrar por data">
+        <div class="filters" aria-label="Filtrar por câmera">
+          <button class="secondary active" data-camera="ALL">Todos</button>
+          <button class="secondary" data-camera="CAM1">CAM1</button>
+          <button class="secondary" data-camera="CAM2">CAM2</button>
+        </div>
+        <input id="search" type="search"
+          placeholder="Buscar por câmera ou nome..."
+          aria-label="Buscar replays">
+      </div>
+      <div class="filters" style="margin-top:12px">
+        <button class="secondary" id="refresh">↻ Atualizar vídeos</button>
+      </div>
+      <div id="status" role="status">Carregando vídeos...</div>
     </div>
     <div id="videos"></div>
   </section>
 </main>
 
-<footer>ARENA REPLAY PRO · Galeria de vídeos</footer>
+<footer>
+  <strong>ARENA REPLAY PRO</strong><br>
+  Tecnologia para rever cada lance.
+</footer>
 
 <script>
 const FUNCTION_URL =
@@ -131,52 +252,66 @@ const loginStatus = document.getElementById("loginStatus");
 const statusBox = document.getElementById("status");
 const videosBox = document.getElementById("videos");
 const refreshButton = document.getElementById("refresh");
+const dateFilter = document.getElementById("dateFilter");
+const searchInput = document.getElementById("search");
+const cameraButtons = [...document.querySelectorAll("[data-camera]")];
 
 let galleryPassword = "";
+let allVideos = [];
+let selectedCamera = "ALL";
 
 enterButton.addEventListener("click", enterGallery);
 passwordInput.addEventListener("keydown", event => {
   if (event.key === "Enter") enterGallery();
 });
 refreshButton.addEventListener("click", loadVideos);
+dateFilter.addEventListener("change", renderFiltered);
+searchInput.addEventListener("input", renderFiltered);
+
+cameraButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    selectedCamera = button.dataset.camera;
+    cameraButtons.forEach(item =>
+      item.classList.toggle("active", item === button)
+    );
+    renderFiltered();
+  });
+});
+
+async function requestVideos(password) {
+  const response = await fetch(FUNCTION_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password })
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(response.status === 401
+      ? "Senha incorreta. Tente novamente."
+      : (result.error || "Não foi possível buscar os vídeos."));
+  }
+
+  return result.items || [];
+}
 
 async function enterGallery() {
   const value = passwordInput.value;
-
   if (!value) {
     loginStatus.textContent = "Digite a senha para continuar.";
     return;
   }
 
   enterButton.disabled = true;
-  loginStatus.textContent = "Verificando senha...";
+  loginStatus.textContent = "Verificando acesso...";
 
   try {
-    const response = await fetch(FUNCTION_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password: value })
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        response.status === 401
-          ? "Senha incorreta. Tente novamente."
-          : (result.error || "Não foi possível entrar.")
-      );
-    }
-
+    allVideos = await requestVideos(value);
     galleryPassword = value;
     login.classList.add("hidden");
     gallery.classList.remove("hidden");
-    videosBox.replaceChildren();
-    renderVideos(result.items || []);
-
-    statusBox.textContent = (result.items || []).length
-      ? "Replays carregados."
-      : "Nenhum vídeo encontrado.";
+    renderFiltered();
   } catch (error) {
     loginStatus.textContent = error.message || "Erro de conexão.";
   } finally {
@@ -186,55 +321,74 @@ async function enterGallery() {
 
 async function loadVideos() {
   refreshButton.disabled = true;
-  statusBox.textContent = "Buscando novos vídeos...";
-  videosBox.replaceChildren();
+  statusBox.textContent = "Atualizando a galeria...";
 
   try {
-    const response = await fetch(FUNCTION_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password: galleryPassword })
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.error || "Falha ao buscar vídeos.");
-    }
-
-    renderVideos(result.items || []);
-
-    statusBox.textContent = result.items?.length
-      ? `${result.items.length} vídeo(s) encontrado(s).`
-      : "Nenhum vídeo encontrado.";
+    allVideos = await requestVideos(galleryPassword);
+    renderFiltered();
   } catch (error) {
-    statusBox.textContent = error.message || "Erro de conexão.";
+    statusBox.textContent = error.message || "Erro ao atualizar.";
   } finally {
     refreshButton.disabled = false;
   }
 }
 
-function renderVideos(items) {
+function getCamera(name) {
+  const match = name.match(/CAM[12]/i);
+  return match ? match[0].toUpperCase() : "VÍDEO";
+}
+
+function cleanName(name) {
+  return name.replace(/^[0-9a-f-]{36}_/i, "");
+}
+
+function renderFiltered() {
+  const query = searchInput.value.trim().toLowerCase();
+  const date = dateFilter.value;
+
+  const filtered = allVideos.filter(item => {
+    const name = item.name || "Replay";
+    const camera = getCamera(name);
+    const matchesCamera =
+      selectedCamera === "ALL" || camera === selectedCamera;
+    const matchesDate = !date || item.date === date;
+    const matchesSearch =
+      !query || `${name} ${camera} ${item.date || ""}`
+        .toLowerCase().includes(query);
+
+    return matchesCamera && matchesDate && matchesSearch;
+  });
+
   videosBox.replaceChildren();
 
-  for (const item of items) {
+  if (!filtered.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = allVideos.length
+      ? "Nenhum replay corresponde aos filtros escolhidos."
+      : "Nenhum vídeo encontrado na nuvem.";
+    videosBox.append(empty);
+  }
+
+  for (const item of filtered) {
+    const name = item.name || "Replay";
+    const camera = getCamera(name);
+    const readableName = cleanName(name);
+
     const card = document.createElement("article");
     card.className = "video-card";
 
-    const name = item.name || "Replay";
-    const cameraMatch = name.match(/CAM[12]/i);
-    const camera = cameraMatch
-      ? cameraMatch[0].toUpperCase()
-      : "Vídeo";
+    const head = document.createElement("div");
+    head.className = "video-head";
 
-    const readableName = name.replace(/^[0-9a-f-]{36}_/i, "");
+    const badge = document.createElement("span");
+    badge.className = "camera" + (camera === "CAM2" ? " cam2" : "");
+    badge.textContent = camera;
 
-    const title = document.createElement("h3");
-    title.textContent = `${camera} · ${readableName}`;
-
-    const meta = document.createElement("p");
-    meta.className = "meta";
-    meta.textContent = `Data: ${item.date || "Não informada"}`;
+    const dateLabel = document.createElement("span");
+    dateLabel.className = "video-date";
+    dateLabel.textContent = item.date || "Data não informada";
+    head.append(badge, dateLabel);
 
     const player = document.createElement("video");
     player.controls = true;
@@ -242,24 +396,42 @@ function renderVideos(items) {
     player.playsInline = true;
     player.src = item.url;
 
-    const watchLink = document.createElement("a");
-    watchLink.className = "secondary";
-    watchLink.href = item.url;
-    watchLink.target = "_blank";
-    watchLink.rel = "noopener";
-    watchLink.textContent = "Abrir vídeo";
+    const info = document.createElement("div");
+    info.className = "video-info";
 
-    const downloadLink = document.createElement("a");
-    downloadLink.className = "secondary";
-    downloadLink.href = item.url;
-    downloadLink.target = "_blank";
-    downloadLink.rel = "noopener";
-    downloadLink.textContent = "Baixar vídeo";
-    downloadLink.setAttribute("download", readableName);
+    const title = document.createElement("h3");
+    title.textContent = readableName;
 
-    card.append(title, meta, player, watchLink, downloadLink);
+    const details = document.createElement("div");
+    details.className = "muted";
+    details.style.fontSize = "12px";
+    details.textContent = `Câmera ${camera.replace("CAM", "")} · ${item.date || "Data não informada"}`;
+
+    const actions = document.createElement("div");
+    actions.className = "video-actions";
+
+    const open = document.createElement("a");
+    open.href = item.url;
+    open.target = "_blank";
+    open.rel = "noopener";
+    open.textContent = "▶ Abrir vídeo";
+
+    const download = document.createElement("a");
+    download.href = item.url;
+    download.target = "_blank";
+    download.rel = "noopener";
+    download.textContent = "↓ Baixar";
+    download.className = "download";
+    download.setAttribute("download", readableName);
+
+    actions.append(open, download);
+    info.append(title, details, actions);
+    card.append(head, player, info);
     videosBox.append(card);
   }
+
+  statusBox.textContent =
+    `${filtered.length} de ${allVideos.length} replay(s) exibido(s).`;
 }
 </script>
 </body>
