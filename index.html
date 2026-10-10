@@ -4,240 +4,338 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080d15">
-<title>ARENA REPLAY PRO | Galeria dos atletas</title>
+<meta name="theme-color" content="#070b12">
+<title>ARENA REPLAY PRO | Central de Replays</title>
 <style>
 :root {
   color-scheme: dark;
-  --bg: #080d15;
-  --panel: #111b29;
-  --border: #263b50;
-  --blue: #08b9ed;
-  --blue2: #087cf0;
-  --text: #f4f8ff;
-  --muted: #98aabd;
+  --bg: #070b12;
+  --panel: #101824;
+  --panel2: #141f2d;
+  --line: #253649;
+  --cyan: #00c8f5;
+  --blue: #087cf0;
+  --green: #29d98b;
+  --text: #f5f8fc;
+  --muted: #91a4b9;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  background: radial-gradient(ellipse at top, #14283c 0, var(--bg) 55%);
   color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  font-family: Inter, Arial, sans-serif;
 }
-header {
+button, input { font: inherit; }
+button { cursor: pointer; }
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 22px 16px 26px;
-  border-bottom: 1px solid #183247;
-  background: linear-gradient(180deg, #101d2b, transparent);
+  padding: 30px 18px;
+  background:
+    radial-gradient(ellipse at 50% 120%, #00658c77, transparent 55%),
+    linear-gradient(120deg, #101e2c, #080d16 65%);
+  border-bottom: 1px solid #1d4055;
 }
+.hero:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .2;
+  background: repeating-linear-gradient(
+    120deg, transparent 0 55px, #42c9ff 56px, transparent 57px 110px
+  );
+}
+.hero-content { position: relative; z-index: 1; }
 .logo {
   display: block;
-  width: min(310px, 82vw);
-  max-height: 175px;
+  width: min(290px, 76vw);
+  max-height: 155px;
   object-fit: contain;
-  margin: 0 auto 8px;
+  margin: 0 auto 14px;
 }
-.tagline {
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing: 3px;
+.eyebrow {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 4px;
   text-transform: uppercase;
 }
-main { max-width: 1200px; margin: auto; padding: 22px 16px 42px; }
+.hero h1 {
+  font-size: clamp(26px, 5vw, 44px);
+  margin: 12px 0 8px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+.hero p { color: #a9bacb; margin: 0; }
+.wrap { max-width: 1200px; margin: auto; padding: 26px 18px 50px; }
 .panel {
-  background: rgba(17, 27, 41, .96);
-  border: 1px solid var(--border);
+  background: linear-gradient(145deg, #121e2b, #0e1621);
+  border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 12px 35px #0003;
+  padding: 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 16px 40px #0003;
 }
-h1 { font-size: clamp(22px, 4vw, 32px); margin: 0 0 8px; }
-h2 { font-size: 20px; margin: 0 0 16px; }
-p { line-height: 1.5; }
-.muted { color: var(--muted); }
-label { display: block; margin-bottom: 9px; color: var(--muted); }
-input, button {
-  font: inherit;
-  border-radius: 10px;
-  min-height: 46px;
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
 }
+.panel-title .symbol {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #00c8f51a;
+  border: 1px solid #00c8f544;
+  color: var(--cyan);
+  font-size: 20px;
+}
+h2 { margin: 0; font-size: 21px; }
+.sub { color: var(--muted); margin: 5px 0 0; font-size: 13px; }
+label { display: block; color: var(--muted); font-size: 13px; margin-bottom: 8px; }
 input {
   width: 100%;
-  padding: 12px 14px;
+  min-width: 0;
+  background: #080e17;
   color: white;
-  background: #080f19;
-  border: 1px solid #354a60;
-  margin-bottom: 12px;
+  border: 1px solid #31465b;
+  border-radius: 10px;
+  padding: 13px 14px;
+  outline: none;
 }
-input:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px #00c8f51a; }
 button {
-  cursor: pointer;
   border: 1px solid transparent;
-  padding: 11px 16px;
-  font-weight: 700;
-  transition: .15s ease;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-weight: 800;
+  transition: .15s;
 }
-button:disabled { opacity: .55; cursor: wait; }
+button:disabled { opacity: .6; cursor: wait; }
 .primary {
-  color: #00131b;
-  background: linear-gradient(135deg, #28d7f7, #0788ef);
+  color: #001018;
+  background: linear-gradient(115deg, #28e1f6, #0784f2);
 }
-.primary:hover { filter: brightness(1.12); }
-.secondary {
-  color: var(--text);
-  background: #17283a;
-  border-color: #344a60;
+.primary:hover { filter: brightness(1.1); }
+.outline {
+  background: #142233;
+  color: #dceafa;
+  border-color: #30475e;
 }
-.secondary.active {
-  color: #00131b;
-  background: var(--blue);
-  border-color: var(--blue);
+.outline.active {
+  background: var(--cyan);
+  color: #00121a;
+  border-color: var(--cyan);
 }
-.login-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
-.login-row input { margin: 0; }
-.login-row button { min-width: 180px; }
-#loginStatus, #status { color: var(--muted); margin-top: 12px; }
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 12px;
+}
+.login-grid button { min-height: 46px; min-width: 185px; }
+#loginStatus, #status { color: var(--muted); font-size: 13px; margin-top: 14px; }
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.live-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px #29d98b88;
+}
 .toolbar {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) auto minmax(200px, 1.2fr);
+  grid-template-columns: minmax(170px, .8fr) minmax(250px, 1.3fr);
   gap: 12px;
-  align-items: center;
+  margin-bottom: 14px;
 }
-.toolbar input { margin: 0; }
-.filters { display: flex; flex-wrap: wrap; gap: 7px; }
-.filters button { min-height: 42px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button { flex: 1; min-width: 70px; }
 #videos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 275px), 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 17px;
 }
 .video-card {
   min-width: 0;
   overflow: hidden;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 8px 22px #0003;
+  background: linear-gradient(155deg, #142131, #0d141e);
+  border: 1px solid #25384c;
+  border-radius: 15px;
+  transition: transform .18s, border-color .18s;
 }
-.video-head {
+.video-card:hover { transform: translateY(-3px); border-color: #1688b5; }
+.card-top {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
-  padding: 12px 14px 0;
+  padding: 13px 14px 0;
 }
 .camera {
-  font-size: 12px;
-  font-weight: 800;
-  color: #04121b;
-  background: var(--blue);
-  border-radius: 5px;
+  border-radius: 6px;
+  background: #00c8f5;
+  color: #00121a;
   padding: 6px 9px;
+  font-size: 11px;
+  font-weight: 900;
 }
-.camera.cam2 { background: #21cf83; }
-.video-date { color: var(--muted); font-size: 12px; }
+.camera.cam2 { background: var(--green); }
+.date-label { color: var(--muted); font-size: 11px; }
 video {
   display: block;
-  width: calc(100% - 24px);
-  margin: 12px;
+  width: calc(100% - 26px);
+  margin: 13px;
   margin-bottom: 0;
-  border-radius: 9px;
   background: #000;
+  border-radius: 9px;
   aspect-ratio: 16 / 9;
 }
-.video-info { padding: 12px 14px 15px; }
-.video-info h3 { margin: 0 0 8px; font-size: 15px; overflow-wrap: anywhere; }
-.video-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
-.video-actions a {
-  text-decoration: none;
+.card-info { padding: 14px; }
+.card-info h3 {
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0 0 7px;
+  overflow-wrap: anywhere;
+}
+.card-meta { font-size: 12px; color: var(--muted); }
+.card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
+.card-actions a {
+  display: block;
   text-align: center;
-  flex: 1;
-  min-width: 105px;
-  padding: 10px 12px;
-  border: 1px solid #344a60;
+  text-decoration: none;
+  padding: 11px 8px;
   border-radius: 9px;
-  color: white;
-  background: #17283a;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
+  color: #eaf5ff;
+  background: #1a2b3e;
+  border: 1px solid #30465b;
 }
-.video-actions a.download {
-  background: linear-gradient(135deg, #20d5ef, #0787ed);
-  color: #00121b;
+.card-actions a.download {
+  color: #00121a;
   border: 0;
+  background: linear-gradient(110deg, #26d8ed, #0787ed);
 }
-.hidden { display: none !important; }
 .empty {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 32px 16px;
-  border: 1px dashed #354a60;
+  padding: 36px 16px;
+  border: 1px dashed #30465b;
   border-radius: 14px;
   color: var(--muted);
 }
 footer {
   text-align: center;
-  padding: 24px 16px;
-  color: var(--muted);
-  border-top: 1px solid #183247;
+  border-top: 1px solid #1b2b3b;
+  padding: 25px 14px;
+  color: #6f849a;
   font-size: 12px;
 }
-@media (max-width: 720px) {
-  .login-row { grid-template-columns: 1fr; }
-  .login-row button { width: 100%; }
-  .toolbar { grid-template-columns: 1fr; }
-  .filters button { flex: 1; }
-  .panel { padding: 16px; }
+footer strong { color: var(--cyan); letter-spacing: 2px; }
+.hidden { display: none !important; }
+@media (max-width: 650px) {
+  .hero { min-height: 255px; }
+  .hero h1 { font-size: 28px; }
+  .wrap { padding: 18px 12px 35px; }
+  .panel { padding: 16px; border-radius: 13px; }
+  .login-grid, .toolbar { grid-template-columns: 1fr; }
+  .login-grid button { width: 100%; }
+  .section-head { align-items: flex-start; }
 }
 </style>
 </head>
 <body>
-<header>
-  <img class="logo" src="./logo.png" alt="ARENA REPLAY PRO">
-  <div class="tagline">Galeria oficial dos atletas</div>
+
+<header class="hero">
+  <div class="hero-content">
+    <img class="logo" src="./logo.png" alt="ARENA REPLAY PRO">
+    <div class="eyebrow">Tecnologia esportiva</div>
+    <h1>SEU LANCE. SUA HISTÓRIA.</h1>
+    <p>Reviva os melhores momentos da Arena, de onde estiver.</p>
+  </div>
 </header>
 
-<main>
+<main class="wrap">
   <section class="panel" id="login">
-    <h1>Seus melhores lances</h1>
-    <p class="muted">Assista, reveja e baixe os vídeos da Arena.</p>
-    <label for="password">Senha de acesso à galeria</label>
-    <div class="login-row">
+    <div class="panel-title">
+      <div class="symbol">🔐</div>
+      <div>
+        <h2>Acesso dos atletas</h2>
+        <p class="sub">Entre para encontrar e rever seus lances.</p>
+      </div>
+    </div>
+    <label for="password">Senha da galeria</label>
+    <div class="login-grid">
       <input id="password" type="password"
-        placeholder="Digite a senha da galeria"
+        placeholder="Digite sua senha de acesso"
         autocomplete="current-password">
-      <button class="primary" id="enter">Entrar na galeria</button>
+      <button id="enter" class="primary">ENTRAR NA GALERIA →</button>
     </div>
     <div id="loginStatus" role="status"></div>
   </section>
 
   <section id="gallery" class="hidden">
     <div class="panel">
-      <h2>🎬 Galeria de replays</h2>
+      <div class="section-head">
+        <div class="panel-title" style="margin:0">
+          <div class="symbol">▶</div>
+          <div>
+            <h2>Central de replays</h2>
+            <p class="sub">Encontre, assista e baixe os seus vídeos.</p>
+          </div>
+        </div>
+        <span class="live-label"><span class="dot"></span> GALERIA ONLINE</span>
+      </div>
+
       <div class="toolbar">
         <input id="dateFilter" type="date" aria-label="Filtrar por data">
-        <div class="filters" aria-label="Filtrar por câmera">
-          <button class="secondary active" data-camera="ALL">Todos</button>
-          <button class="secondary" data-camera="CAM1">CAM1</button>
-          <button class="secondary" data-camera="CAM2">CAM2</button>
-        </div>
         <input id="search" type="search"
-          placeholder="Buscar por câmera ou nome..."
+          placeholder="Buscar por nome ou câmera..."
           aria-label="Buscar replays">
       </div>
-      <div class="filters" style="margin-top:12px">
-        <button class="secondary" id="refresh">↻ Atualizar vídeos</button>
+      <div class="filters">
+        <button class="outline active" data-camera="ALL">TODOS</button>
+        <button class="outline" data-camera="CAM1">CÂMERA 1</button>
+        <button class="outline" data-camera="CAM2">CÂMERA 2</button>
+        <button class="outline" id="refresh">↻ ATUALIZAR</button>
       </div>
-      <div id="status" role="status">Carregando vídeos...</div>
+      <div id="status" role="status">Preparando galeria...</div>
     </div>
     <div id="videos"></div>
   </section>
 </main>
 
 <footer>
-  <strong>ARENA REPLAY PRO</strong><br>
-  Tecnologia para rever cada lance.
+  <strong>ARENA REPLAY PRO</strong>
+  <p>Reveja cada detalhe. Reviva cada emoção.</p>
 </footer>
 
 <script>
@@ -349,14 +447,10 @@ function renderFiltered() {
   const filtered = allVideos.filter(item => {
     const name = item.name || "Replay";
     const camera = getCamera(name);
-    const matchesCamera =
-      selectedCamera === "ALL" || camera === selectedCamera;
-    const matchesDate = !date || item.date === date;
-    const matchesSearch =
-      !query || `${name} ${camera} ${item.date || ""}`
-        .toLowerCase().includes(query);
-
-    return matchesCamera && matchesDate && matchesSearch;
+    return (selectedCamera === "ALL" || camera === selectedCamera)
+      && (!date || item.date === date)
+      && (!query || `${name} ${camera} ${item.date || ""}`
+        .toLowerCase().includes(query));
   });
 
   videosBox.replaceChildren();
@@ -378,17 +472,17 @@ function renderFiltered() {
     const card = document.createElement("article");
     card.className = "video-card";
 
-    const head = document.createElement("div");
-    head.className = "video-head";
+    const top = document.createElement("div");
+    top.className = "card-top";
 
     const badge = document.createElement("span");
     badge.className = "camera" + (camera === "CAM2" ? " cam2" : "");
-    badge.textContent = camera;
+    badge.textContent = camera === "VÍDEO" ? "REPLAY" : camera;
 
     const dateLabel = document.createElement("span");
-    dateLabel.className = "video-date";
+    dateLabel.className = "date-label";
     dateLabel.textContent = item.date || "Data não informada";
-    head.append(badge, dateLabel);
+    top.append(badge, dateLabel);
 
     const player = document.createElement("video");
     player.controls = true;
@@ -397,36 +491,35 @@ function renderFiltered() {
     player.src = item.url;
 
     const info = document.createElement("div");
-    info.className = "video-info";
+    info.className = "card-info";
 
     const title = document.createElement("h3");
     title.textContent = readableName;
 
-    const details = document.createElement("div");
-    details.className = "muted";
-    details.style.fontSize = "12px";
-    details.textContent = `Câmera ${camera.replace("CAM", "")} · ${item.date || "Data não informada"}`;
+    const meta = document.createElement("div");
+    meta.className = "card-meta";
+    meta.textContent = `ARENA REPLAY PRO · ${camera}`;
 
     const actions = document.createElement("div");
-    actions.className = "video-actions";
+    actions.className = "card-actions";
 
     const open = document.createElement("a");
     open.href = item.url;
     open.target = "_blank";
     open.rel = "noopener";
-    open.textContent = "▶ Abrir vídeo";
+    open.textContent = "▶ ASSISTIR";
 
     const download = document.createElement("a");
     download.href = item.url;
     download.target = "_blank";
     download.rel = "noopener";
-    download.textContent = "↓ Baixar";
+    download.textContent = "↓ BAIXAR";
     download.className = "download";
     download.setAttribute("download", readableName);
 
     actions.append(open, download);
-    info.append(title, details, actions);
-    card.append(head, player, info);
+    info.append(title, meta, actions);
+    card.append(top, player, info);
     videosBox.append(card);
   }
 
