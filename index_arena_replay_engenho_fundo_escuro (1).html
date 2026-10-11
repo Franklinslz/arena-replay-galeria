@@ -1,0 +1,660 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070b12">
+<title>ARENA REPLAY PRO | Central de Replays</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #070b12;
+  --panel: #101824;
+  --panel2: #141f2d;
+  --line: #253649;
+  --cyan: #00c8f5;
+  --blue: #087cf0;
+  --green: #29d98b;
+  --text: #f5f8fc;
+  --muted: #91a4b9;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--text);
+  background-color: var(--bg);
+  background-image: linear-gradient(rgba(3, 8, 16, .78), rgba(3, 8, 16, .86)), url("./Est%C3%A1dio%20Vazio%20sob%20Luzes%20Azuis.png");
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  font-family: Inter, Arial, sans-serif;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px 18px;
+  background:
+    linear-gradient(rgba(5, 13, 24, .70), rgba(5, 13, 24, .82)),
+    radial-gradient(ellipse at 50% 120%, #00658c55, transparent 55%);
+  border-bottom: 1px solid #1d4055;
+}
+.hero-content { position: relative; z-index: 1; }
+.logo {
+  display: block;
+  width: min(290px, 76vw);
+  max-height: 155px;
+  object-fit: contain;
+  margin: 0 auto 14px;
+}
+.eyebrow {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(26px, 5vw, 44px);
+  margin: 12px 0 8px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+.hero p { color: #a9bacb; margin: 0; }
+.wrap { max-width: 1200px; margin: auto; padding: 26px 18px 50px; }
+.panel {
+  background: linear-gradient(145deg, rgba(12, 27, 43, .94), rgba(5, 14, 25, .94));
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 16px 40px #0003;
+}
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.panel-title .symbol {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #00c8f51a;
+  border: 1px solid #00c8f544;
+  color: var(--cyan);
+  font-size: 20px;
+}
+h2 { margin: 0; font-size: 21px; }
+.sub { color: var(--muted); margin: 5px 0 0; font-size: 13px; }
+label { display: block; color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+input {
+  width: 100%;
+  min-width: 0;
+  background: #080e17;
+  color: white;
+  border: 1px solid #31465b;
+  border-radius: 10px;
+  padding: 13px 14px;
+  outline: none;
+}
+input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px #00c8f51a; }
+button {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-weight: 800;
+  transition: .15s;
+}
+button:disabled { opacity: .6; cursor: wait; }
+.primary {
+  color: #001018;
+  background: linear-gradient(115deg, #28e1f6, #0784f2);
+}
+.primary:hover { filter: brightness(1.1); }
+.outline {
+  background: #142233;
+  color: #dceafa;
+  border-color: #30475e;
+}
+.outline.active {
+  background: var(--cyan);
+  color: #00121a;
+  border-color: var(--cyan);
+}
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 12px;
+}
+.login-grid button { min-height: 46px; min-width: 185px; }
+#loginStatus, #status { color: var(--muted); font-size: 13px; margin-top: 14px; }
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.live-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px #29d98b88;
+}
+.date-field, .search-field { min-width: 0; }
+.date-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid #31465b;
+  border-radius: 10px;
+  background: #080e17;
+  color: #91a4b9;
+  overflow: hidden;
+}
+.date-control .date-value { position: relative; z-index: 1; display: block; min-width: 0; flex: 1 1 auto; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: #91a4b9; pointer-events: none; }
+.date-control .calendar-icon { position: relative; z-index: 1; display: block; flex: 0 0 auto; color: var(--cyan); font-size: 20px; pointer-events: none; }
+#dateFilter {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.01;
+  z-index: 2;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+}
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(170px, .8fr) minmax(250px, 1.3fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button { flex: 1; min-width: 70px; }
+#videos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 17px;
+}
+.video-card {
+  min-width: 0;
+  overflow: hidden;
+  background: linear-gradient(155deg, rgba(15, 34, 52, .96), rgba(5, 14, 24, .96));
+  border: 1px solid #25384c;
+  border-radius: 15px;
+  transition: transform .18s, border-color .18s;
+}
+.video-card:hover { transform: translateY(-3px); border-color: #1688b5; }
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 13px 14px 0;
+}
+.camera {
+  border-radius: 6px;
+  background: #00c8f5;
+  color: #00121a;
+  padding: 6px 9px;
+  font-size: 11px;
+  font-weight: 900;
+}
+.camera.cam2 { background: var(--green); }
+.date-label { color: var(--muted); font-size: 11px; }
+video {
+  display: block;
+  width: calc(100% - 26px);
+  margin: 13px;
+  margin-bottom: 0;
+  background: #000;
+  border-radius: 9px;
+  aspect-ratio: 16 / 9;
+}
+.card-info { padding: 14px; }
+.card-info h3 {
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0 0 7px;
+  overflow-wrap: anywhere;
+}
+.card-meta { font-size: 12px; color: var(--muted); }
+.card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
+.card-actions a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  padding: 11px 8px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #eaf5ff;
+  background: #1a2b3e;
+  border: 1px solid #30465b;
+}
+.card-actions a.download {
+  color: #00121a;
+  border: 0;
+  background: linear-gradient(110deg, #26d8ed, #0787ed);
+}
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 36px 16px;
+  border: 1px dashed #30465b;
+  border-radius: 14px;
+  color: var(--muted);
+}
+footer {
+  text-align: center;
+  border-top: 1px solid #1b2b3b;
+  padding: 25px 14px;
+  color: #6f849a;
+  font-size: 12px;
+}
+footer strong { color: var(--cyan); letter-spacing: 2px; }
+.hidden { display: none !important; }
+@media (max-width: 650px) {
+  html { -webkit-text-size-adjust: 100%; }
+  body { background-attachment: scroll; }
+  .hero { min-height: 0; padding: 30px 16px 34px; }
+  .logo { width: min(230px, 68vw); max-height: 125px; margin-bottom: 18px; }
+  .eyebrow { font-size: 10px; letter-spacing: 3px; }
+  .hero h1 { font-size: clamp(25px, 7vw, 32px); line-height: 1.12; margin: 12px 0 10px; }
+  .hero p { max-width: 340px; font-size: 14px; line-height: 1.5; }
+  .wrap { width: 100%; padding: 16px 12px 30px; }
+  .panel { width: 100%; min-width: 0; padding: 15px; border-radius: 13px; }
+  .panel-title { gap: 10px; }
+  h2 { font-size: 19px; }
+  .sub { font-size: 12px; line-height: 1.45; }
+  .login-grid, .toolbar { grid-template-columns: minmax(0, 1fr); }
+  .login-grid button { width: 100%; min-width: 0; }
+  .toolbar { gap: 12px; }
+  input { min-width: 0; width: 100%; font-size: 16px; padding: 12px; }
+  .date-field label, .search-field label { font-size: 11px; margin-bottom: 6px; }
+  .date-control { height: 48px; min-height: 48px; }
+  #dateFilter { height: 48px; min-height: 48px; padding: 0; font-size: 16px; }
+  .section-head { align-items: flex-start; gap: 12px; }
+  .live-label { margin-left: 52px; }
+  .filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; }
+  .filters button { width: 100%; min-width: 0; min-height: 44px; padding: 11px 6px; font-size: 12px; line-height: 1.2; white-space: normal; overflow-wrap: anywhere; }
+  #refresh { grid-column: 1 / -1; }
+  #status { font-size: 12px; line-height: 1.45; overflow-wrap: anywhere; }
+  #videos { grid-template-columns: minmax(0, 1fr); gap: 13px; }
+  .video-card { width: 100%; min-width: 0; }
+  video { width: calc(100% - 24px); margin: 12px 12px 0; }
+  .card-top { padding: 12px 12px 0; }
+  .card-info { padding: 12px; }
+  .card-actions a { font-size: 12px; padding: 12px 6px; }
+  footer { padding: 22px 12px; }
+}
+
+/* Área de patrocinadores */
+.sponsors-panel { margin-top: 22px; }
+.sponsors-heading { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.sponsors-heading .symbol { display:grid; place-items:center; width:42px; height:42px; flex:0 0 auto; border-radius:12px; background:#00c8f51a; border:1px solid #00c8f544; color:var(--cyan); font-size:21px; }
+.sponsors-intro { color:var(--muted); font-size:13px; line-height:1.5; margin:0 0 18px; }
+.sponsors-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+.sponsor-card { display:flex; align-items:center; justify-content:center; min-width:0; min-height:126px; padding:14px; border:1px solid #2b4157; border-radius:12px; background:linear-gradient(145deg,#0b1420,#111e2d); }
+.sponsor-card img { display:block; width:100%; max-width:190px; height:100px; object-fit:contain; }
+.sponsor-card.light-logo { background:#f4f6f8; border-color:#d6dee7; }
+.sponsor-card.light-logo img { max-width:180px; }
+/* Engenho Pindaré: card escuro e logo convertida para branco */
+.sponsor-card.eng-logo { background:#0b1420; border-color:#2b4157; }
+.sponsor-card.eng-logo img {
+  max-width:180px;
+  filter: invert(1);
+  mix-blend-mode: screen;
+}
+@media (max-width:850px) { .sponsors-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:650px) {
+  .sponsors-panel { margin-top:16px; }
+  .sponsors-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+  .sponsor-card { min-height:100px; padding:10px; }
+  .sponsor-card img { height:76px; }
+  .sponsors-intro { font-size:12px; }
+}
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-content">
+    <img class="logo" src="./logo.png" alt="ARENA REPLAY PRO">
+    <div class="eyebrow">Tecnologia esportiva</div>
+    <h1>SEU LANCE. SUA HISTÓRIA.</h1>
+    <p>Reviva os melhores momentos da Arena, de onde estiver.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel" id="login">
+    <div class="panel-title">
+      <div class="symbol">🔐</div>
+      <div>
+        <h2>Acesso dos atletas</h2>
+        <p class="sub">Entre para encontrar e rever seus lances.</p>
+      </div>
+    </div>
+    <label for="password">Senha da galeria</label>
+    <div class="login-grid">
+      <input id="password" type="password"
+        placeholder="Digite sua senha de acesso"
+        autocomplete="current-password">
+      <button id="enter" class="primary">ENTRAR NA GALERIA →</button>
+    </div>
+    <div id="loginStatus" role="status"></div>
+  </section>
+
+  <section id="gallery" class="hidden">
+    <div class="panel">
+      <div class="section-head">
+        <div class="panel-title" style="margin:0">
+          <div class="symbol">▶</div>
+          <div>
+            <h2>Central de replays</h2>
+            <p class="sub">Encontre, assista e baixe os seus vídeos.</p>
+          </div>
+        </div>
+        <span class="live-label"><span class="dot"></span> GALERIA ONLINE</span>
+      </div>
+
+      <div class="toolbar">
+        <div class="date-field">
+          <label for="dateFilter">FILTRAR POR DATA</label>
+          <div class="date-control">
+            <span class="date-value" id="dateValue">Selecionar data</span>
+            <span class="calendar-icon" aria-hidden="true">▦</span>
+            <input id="dateFilter" type="date" aria-label="Selecionar data para filtrar os replays">
+          </div>
+        </div>
+        <div class="search-field">
+          <label for="search">BUSCAR REPLAYS</label>
+          <input id="search" type="search"
+            placeholder="Buscar por nome ou câmera..."
+            aria-label="Buscar replays">
+        </div>
+      </div>
+      <div class="filters">
+        <button class="outline active" data-camera="ALL">TODOS</button>
+        <button class="outline" data-camera="CAM1">CÂMERA 1</button>
+        <button class="outline" data-camera="CAM2">CÂMERA 2</button>
+        <button class="outline" id="refresh">↻ ATUALIZAR</button>
+      </div>
+      <div id="status" role="status">Preparando galeria...</div>
+    </div>
+    <div id="videos"></div>
+  </section>
+
+  <section class="panel sponsors-panel" aria-labelledby="sponsorsTitle">
+    <div class="sponsors-heading">
+      <div class="symbol" aria-hidden="true">🤝</div>
+      <div>
+        <h2 id="sponsorsTitle">Nossos patrocinadores</h2>
+        <p class="sub">Empresas que apoiam o esporte e a Arena.</p>
+      </div>
+    </div>
+    <p class="sponsors-intro">Agradecemos aos parceiros que fazem parte dessa iniciativa.</p>
+    <div class="sponsors-grid">
+      <div class="sponsor-card" aria-label="Zero 7 Arena Beer">
+        <img src="./patrocinador-zero7.png" alt="Zero 7 Arena Beer" loading="lazy">
+      </div>
+      <div class="sponsor-card eng-logo" aria-label="Cachaça Engenho">
+        <img src="./patrocinador-cachaca.png" alt="Cachaça Engenho" loading="lazy">
+      </div>
+      <div class="sponsor-card" aria-label="Augusto Design">
+        <img src="./patrocinador-augusto-design.png" alt="Augusto Design" loading="lazy">
+      </div>
+      <div class="sponsor-card" aria-label="CF Produções e Eventos">
+        <img src="./patrocinador-cf-producoes.png" alt="CF Produções e Eventos" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <strong>ARENA REPLAY PRO</strong>
+  <p>Reveja cada detalhe. Reviva cada emoção.</p>
+</footer>
+
+<script>
+const FUNCTION_URL =
+  "https://okvwbdmhdiaphsgfhdeg.supabase.co/functions/v1/list-replays";
+
+const login = document.getElementById("login");
+const gallery = document.getElementById("gallery");
+const passwordInput = document.getElementById("password");
+const enterButton = document.getElementById("enter");
+const loginStatus = document.getElementById("loginStatus");
+const statusBox = document.getElementById("status");
+const videosBox = document.getElementById("videos");
+const refreshButton = document.getElementById("refresh");
+const dateFilter = document.getElementById("dateFilter");
+const dateValue = document.getElementById("dateValue");
+const dateControl = document.querySelector(".date-control");
+dateControl.addEventListener("click", () => {
+  try { if (typeof dateFilter.showPicker === "function") dateFilter.showPicker(); else dateFilter.focus(); } catch (_) { dateFilter.focus(); }
+});
+const searchInput = document.getElementById("search");
+const cameraButtons = [...document.querySelectorAll("[data-camera]")];
+
+let galleryPassword = "";
+let allVideos = [];
+let selectedCamera = "ALL";
+
+enterButton.addEventListener("click", enterGallery);
+passwordInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") enterGallery();
+});
+refreshButton.addEventListener("click", loadVideos);
+dateFilter.addEventListener("change", () => {
+  if (dateFilter.value) {
+    const [year, month, day] = dateFilter.value.split("-");
+    dateValue.textContent = `${day}/${month}/${year}`;
+    dateValue.style.color = "#f5f8fc";
+  } else {
+    dateValue.textContent = "Selecionar data";
+    dateValue.style.color = "#91a4b9";
+  }
+  renderFiltered();
+});
+searchInput.addEventListener("input", renderFiltered);
+
+cameraButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    selectedCamera = button.dataset.camera;
+    cameraButtons.forEach(item =>
+      item.classList.toggle("active", item === button)
+    );
+    renderFiltered();
+  });
+});
+
+async function requestVideos(password) {
+  const response = await fetch(FUNCTION_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password })
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(response.status === 401
+      ? "Senha incorreta. Tente novamente."
+      : (result.error || "Não foi possível buscar os vídeos."));
+  }
+
+  return result.items || [];
+}
+
+async function enterGallery() {
+  const value = passwordInput.value;
+  if (!value) {
+    loginStatus.textContent = "Digite a senha para continuar.";
+    return;
+  }
+
+  enterButton.disabled = true;
+  loginStatus.textContent = "Verificando acesso...";
+
+  try {
+    allVideos = await requestVideos(value);
+    galleryPassword = value;
+    login.classList.add("hidden");
+    gallery.classList.remove("hidden");
+    renderFiltered();
+  } catch (error) {
+    loginStatus.textContent = error.message || "Erro de conexão.";
+  } finally {
+    enterButton.disabled = false;
+  }
+}
+
+async function loadVideos() {
+  refreshButton.disabled = true;
+  statusBox.textContent = "Atualizando a galeria...";
+
+  try {
+    allVideos = await requestVideos(galleryPassword);
+    renderFiltered();
+  } catch (error) {
+    statusBox.textContent = error.message || "Erro ao atualizar.";
+  } finally {
+    refreshButton.disabled = false;
+  }
+}
+
+function getCamera(name) {
+  const match = name.match(/CAM[12]/i);
+  return match ? match[0].toUpperCase() : "VÍDEO";
+}
+
+function cleanName(name) {
+  return name.replace(/^[0-9a-f-]{36}_/i, "");
+}
+
+function renderFiltered() {
+  const query = searchInput.value.trim().toLowerCase();
+  const date = dateFilter.value;
+
+  const filtered = allVideos.filter(item => {
+    const name = item.name || "Replay";
+    const camera = getCamera(name);
+    return (selectedCamera === "ALL" || camera === selectedCamera)
+      && (!date || item.date === date)
+      && (!query || `${name} ${camera} ${item.date || ""}`
+        .toLowerCase().includes(query));
+  });
+
+  videosBox.replaceChildren();
+
+  if (!filtered.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = allVideos.length
+      ? "Nenhum replay corresponde aos filtros escolhidos."
+      : "Nenhum vídeo encontrado na nuvem.";
+    videosBox.append(empty);
+  }
+
+  for (const item of filtered) {
+    const name = item.name || "Replay";
+    const camera = getCamera(name);
+    const readableName = cleanName(name);
+
+    const card = document.createElement("article");
+    card.className = "video-card";
+
+    const top = document.createElement("div");
+    top.className = "card-top";
+
+    const badge = document.createElement("span");
+    badge.className = "camera" + (camera === "CAM2" ? " cam2" : "");
+    badge.textContent = camera === "VÍDEO" ? "REPLAY" : camera;
+
+    const dateLabel = document.createElement("span");
+    dateLabel.className = "date-label";
+    dateLabel.textContent = item.date || "Data não informada";
+    top.append(badge, dateLabel);
+
+    const player = document.createElement("video");
+    player.controls = true;
+    player.preload = "none";
+    player.playsInline = true;
+    player.src = item.url;
+
+    const info = document.createElement("div");
+    info.className = "card-info";
+
+    const title = document.createElement("h3");
+    title.textContent = readableName;
+
+    const meta = document.createElement("div");
+    meta.className = "card-meta";
+    meta.textContent = `ARENA REPLAY PRO · ${camera}`;
+
+    const actions = document.createElement("div");
+    actions.className = "card-actions";
+
+    const open = document.createElement("a");
+    open.href = item.url;
+    open.target = "_blank";
+    open.rel = "noopener";
+    open.textContent = "▶ ASSISTIR";
+
+    const download = document.createElement("a");
+    download.href = item.url;
+    download.target = "_blank";
+    download.rel = "noopener";
+    download.textContent = "↓ BAIXAR";
+    download.className = "download";
+    download.setAttribute("download", readableName);
+
+    actions.append(open, download);
+    info.append(title, meta, actions);
+    card.append(top, player, info);
+    videosBox.append(card);
+  }
+
+  statusBox.textContent =
+    `${filtered.length} de ${allVideos.length} replay(s) exibido(s).`;
+}
+</script>
+</body>
+</html>
