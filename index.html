@@ -321,6 +321,26 @@ footer strong { color: var(--cyan); letter-spacing: 2px; }
   .card-actions a { font-size: 12px; padding: 12px 6px; }
   footer { padding: 22px 12px; }
 }
+
+/* Área de patrocinadores */
+.sponsors-panel { margin-top: 22px; }
+.sponsors-heading { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.sponsors-heading .symbol { display:grid; place-items:center; width:42px; height:42px; flex:0 0 auto; border-radius:12px; background:#00c8f51a; border:1px solid #00c8f544; color:var(--cyan); font-size:21px; }
+.sponsors-intro { color:var(--muted); font-size:13px; line-height:1.5; margin:0 0 18px; }
+.sponsors-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+.sponsor-card { display:flex; align-items:center; justify-content:center; min-width:0; min-height:126px; padding:14px; border:1px solid #2b4157; border-radius:12px; background:linear-gradient(145deg,#0b1420,#111e2d); }
+.sponsor-card img { display:block; width:100%; max-width:190px; height:100px; object-fit:contain; }
+.sponsor-card.light-logo { background:#f4f6f8; border-color:#d6dee7; }
+.sponsor-card.light-logo img { max-width:180px; }
+@media (max-width:850px) { .sponsors-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:650px) {
+  .sponsors-panel { margin-top:16px; }
+  .sponsors-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+  .sponsor-card { min-height:100px; padding:10px; }
+  .sponsor-card img { height:76px; }
+  .sponsors-intro { font-size:12px; }
+}
+
 </style>
 </head>
 <body>
@@ -392,6 +412,32 @@ footer strong { color: var(--cyan); letter-spacing: 2px; }
     </div>
     <div id="videos"></div>
   </section>
+
+  <section class="panel sponsors-panel" aria-labelledby="sponsorsTitle">
+    <div class="sponsors-heading">
+      <div class="symbol" aria-hidden="true">🤝</div>
+      <div>
+        <h2 id="sponsorsTitle">Nossos patrocinadores</h2>
+        <p class="sub">Empresas que apoiam o esporte e a Arena.</p>
+      </div>
+    </div>
+    <p class="sponsors-intro">Agradecemos aos parceiros que fazem parte dessa iniciativa.</p>
+    <div class="sponsors-grid">
+      <div class="sponsor-card" aria-label="Zero 7 Arena Beer">
+        <img src="./patrocinador-zero7.png" alt="Zero 7 Arena Beer" loading="lazy">
+      </div>
+      <div class="sponsor-card light-logo" aria-label="Cachaça Engenho">
+        <img src="./patrocinador-cachaca.png" alt="Cachaça Engenho" loading="lazy">
+      </div>
+      <div class="sponsor-card light-logo" aria-label="Augusto Design">
+        <img src="./patrocinador-augusto-design.png" alt="Augusto Design" loading="lazy">
+      </div>
+      <div class="sponsor-card" aria-label="CF Produções e Eventos">
+        <img src="./patrocinador-cf-producoes.png" alt="CF Produções e Eventos" loading="lazy">
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer>
